@@ -1,9 +1,10 @@
 # Welcome to **Beat Weaver** 🎶
 
-**DEMO**: https://<your-github-username>.github.io/beat-weaver
+**DEMO**: https://ddhanh.github.io/beat-weaver
 
 ## Beat Weaver
 
+<img width="1013" height="990" alt="Screenshot 2025-12-12 at 12 03 26 AM" src="https://github.com/user-attachments/assets/baa1a496-8ef4-4048-89eb-684fe9a824f9" />
 
 
 ## Summary
