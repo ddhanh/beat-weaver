@@ -53,7 +53,7 @@ export function GenreGalaxy({ tracks, onSelectTrack }: GenreGalaxyProps) {
   }, [tracks]);
 
   return (
-    <div className="relative w-full h-[400px] rounded-2xl glass-card overflow-hidden">
+    <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] rounded-2xl glass-card overflow-hidden touch-pan-x touch-pan-y">
       {/* Stars background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background">
         {Array.from({ length: 50 }).map((_, i) => (
@@ -71,7 +71,7 @@ export function GenreGalaxy({ tracks, onSelectTrack }: GenreGalaxyProps) {
       </div>
 
       {/* Track points */}
-      <div className="absolute inset-8">
+      <div className="absolute inset-4 sm:inset-6 md:inset-8">
         {normalizedTracks.map((track) => {
           const color = genreColors[track.genre] || "#ffffff";
           const isHovered = hoveredTrack?.id === track.id;
@@ -82,8 +82,14 @@ export function GenreGalaxy({ tracks, onSelectTrack }: GenreGalaxyProps) {
               onClick={() => onSelectTrack(track)}
               onMouseEnter={() => setHoveredTrack(track)}
               onMouseLeave={() => setHoveredTrack(null)}
+              onTouchStart={() => setHoveredTrack(track)}
+              onTouchEnd={() => {
+                onSelectTrack(track);
+                setTimeout(() => setHoveredTrack(null), 1500);
+              }}
               className={cn(
-                "absolute w-3 h-3 rounded-full transition-all duration-300 hover:scale-150",
+                "absolute w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300",
+                "hover:scale-150 active:scale-150",
                 isHovered && "z-10"
               )}
               style={{
@@ -103,14 +109,14 @@ export function GenreGalaxy({ tracks, onSelectTrack }: GenreGalaxyProps) {
       {/* Tooltip */}
       {hoveredTrack && (
         <div
-          className="absolute z-20 px-3 py-2 rounded-lg bg-card/95 backdrop-blur-sm border border-border shadow-xl pointer-events-none animate-slide-up"
+          className="absolute z-20 px-3 py-2 rounded-lg bg-card/95 backdrop-blur-sm border border-border shadow-xl pointer-events-none animate-slide-up max-w-[150px] sm:max-w-[200px]"
           style={{
-            left: `calc(${((hoveredTrack.embedX || 0) + 1) * 50}% + 2rem)`,
-            top: `calc(${((hoveredTrack.embedY || 0) + 1) * 50}% + 2rem)`,
+            left: `clamp(1rem, calc(${((hoveredTrack.embedX || 0) + 1) * 50}% + 1rem), calc(100% - 10rem))`,
+            top: `clamp(4rem, calc(${((hoveredTrack.embedY || 0) + 1) * 50}% + 1rem), calc(100% - 6rem))`,
           }}
         >
-          <p className="font-semibold text-sm">{hoveredTrack.name}</p>
-          <p className="text-xs text-muted-foreground">{hoveredTrack.artist}</p>
+          <p className="font-semibold text-xs sm:text-sm truncate">{hoveredTrack.name}</p>
+          <p className="text-xs text-muted-foreground truncate">{hoveredTrack.artist}</p>
           <p className="text-xs mt-1" style={{ color: genreColors[hoveredTrack.genre] }}>
             {hoveredTrack.genre}
           </p>
@@ -118,26 +124,26 @@ export function GenreGalaxy({ tracks, onSelectTrack }: GenreGalaxyProps) {
       )}
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 right-4">
-        <div className="flex flex-wrap gap-2 justify-center">
+      <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
+        <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
           {Object.entries(genreColors)
-            .slice(0, 8)
+            .slice(0, 6)
             .map(([genre, color]) => (
-              <div key={genre} className="flex items-center gap-1">
+              <div key={genre} className="flex items-center gap-0.5 sm:gap-1">
                 <div
-                  className="w-2 h-2 rounded-full"
+                  className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-xs text-muted-foreground">{genre}</span>
+                <span className="text-[10px] sm:text-xs text-muted-foreground">{genre}</span>
               </div>
             ))}
         </div>
       </div>
 
       {/* Title */}
-      <div className="absolute top-4 left-4">
-        <h3 className="text-lg font-bold gradient-text">Genre Galaxy</h3>
-        <p className="text-xs text-muted-foreground">Click a star to explore</p>
+      <div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+        <h3 className="text-base sm:text-lg font-bold gradient-text">Genre Galaxy</h3>
+        <p className="text-[10px] sm:text-xs text-muted-foreground">Click a star to explore</p>
       </div>
     </div>
   );

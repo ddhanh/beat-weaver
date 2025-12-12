@@ -169,7 +169,7 @@ const Index = () => {
           <p className="text-sm text-muted-foreground">
             Built with{" "}
             <span className="text-primary">♪</span> for music lovers •{" "}
-            <span className="font-mono">100% Client-Side</span>
+            <span className="font-mono">Demo Version</span>
           </p>
         </div>
       </footer>
